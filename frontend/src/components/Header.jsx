@@ -6,20 +6,24 @@ import {useUser} from './UserContext';
 const Header = () => {
   const { user, logout } = useUser();
   const navigate = useNavigate();
+  const userContext = useUser();
+
+
+  console.log('UserContext:', userContext);
 
   const handleLogout = () => {
-    console.log('Logout button clicked');
-    if (typeof logout === 'function') {
+    console.log('Logout attempted');
+    if (userContext && typeof userContext.logout === 'function') {
       try {
-        logout();
-        console.log('Logout function called successfully');
+        userContext.logout();
         navigate('/');
-        console.log('Navigation to "/" attempted');
       } catch (error) {
         console.error('Error during logout:', error);
+        alert('An error occurred while logging out. Please try again.');
       }
     } else {
-      console.error('logout is not a function');
+      console.error('logout is not a function', userContext);
+      alert('Unable to logout at the moment. Please try again later.');
     }
   };
 

@@ -7,8 +7,9 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
   const { setUser } = useUser();
+  const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,14 +28,8 @@ const LoginForm = () => {
 
         const { firstName, lastName } = userData;
         const fullName = firstName && lastName ? `${firstName} ${lastName}` : 'Guest';
-        setUser({fullName, ...userData,
-          logout: () => {
-            setUser(null);
-            navigate('/login');
-          }
-        });
-
-        // navigate('/');
+        setUser({fullName, ...userData});
+        navigate('/');
       } else {
         const errorData = await response.text();
         setError(errorData || 'Login failed');
