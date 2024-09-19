@@ -3,6 +3,8 @@ package com.BS.BlueStone.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 @Setter
@@ -17,4 +19,7 @@ public class Shopping_Cart {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
+
+    @OneToMany(mappedBy = "cart")
+    private List<Cart_Items> cartItems;
 }

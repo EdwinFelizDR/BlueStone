@@ -27,6 +27,4 @@ public class Cart_Items {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @Column(name = "added_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime addedAt;
 }
