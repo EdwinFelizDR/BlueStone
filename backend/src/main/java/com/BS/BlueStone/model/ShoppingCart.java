@@ -1,5 +1,6 @@
 package com.BS.BlueStone.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "shopping_cart")
-public class Shopping_Cart {
+public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartId;
@@ -21,5 +22,6 @@ public class Shopping_Cart {
     private Users user;
 
     @OneToMany(mappedBy = "cart")
-    private List<Cart_Items> cartItems;
+    @JsonManagedReference
+    private List<CartItemsDetails> cartItems;
 }

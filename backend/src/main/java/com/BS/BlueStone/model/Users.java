@@ -43,7 +43,7 @@ public class Users {
     @Column(name = "postal_code")
     private int postalCode;
 
-    public CharSequence getPasswordHash() {
+    public String getPasswordHash() {
         return passwordHash;
     }
 }

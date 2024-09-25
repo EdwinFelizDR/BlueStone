@@ -1,22 +1,25 @@
-import React from 'react';
-import '../css/App.css';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {useUser} from './UserContext';
+import { useUser } from './UserContext';
+import '../css/App.css';
 
 const Header = () => {
   const { user, logout } = useUser();
   const navigate = useNavigate();
   const userContext = useUser();
 
-
-  console.log('UserContext:', userContext);
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   const handleLogout = () => {
-    console.log('Logout attempted');
     if (userContext && typeof userContext.logout === 'function') {
       try {
         userContext.logout();
-        navigate('/');
+        localStorage.removeItem('sessionToken'); // Clear session token
+        navigate('/login'); // Navigate to login page
       } catch (error) {
         console.error('Error during logout:', error);
         alert('An error occurred while logging out. Please try again.');
@@ -27,8 +30,6 @@ const Header = () => {
     }
   };
 
-  console.log('Current user:', user);
-  
   return (
     <header>
       <div className='header'>
@@ -49,7 +50,7 @@ const Header = () => {
         <div className="icons">
           <span className="icon">❤️</span>
           <span className="icon"><Link to="/login" style={{ textDecoration: 'none' }}>👤</Link></span>
-          <span className="icon">🛒</span>
+          <span className="icon"><Link to="/cart" style={{ textDecoration: 'none' }}>🛒</Link></span>
         </div>
       </div>
       <div className='logout'>

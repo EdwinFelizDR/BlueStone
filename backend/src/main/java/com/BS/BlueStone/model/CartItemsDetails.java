@@ -1,9 +1,8 @@
 package com.BS.BlueStone.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
@@ -11,14 +10,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "cart_items")
-public class Cart_Items {
+public class CartItemsDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartItemId;
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
-    private Shopping_Cart cart;
+    @JsonBackReference
+    private ShoppingCart cart;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

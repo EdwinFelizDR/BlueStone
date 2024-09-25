@@ -12,31 +12,31 @@ import LoginForm from './components/Login';
 import Profile from './components/Profile';
 import ShowUser from './components/ShowUser';
 import { UserProvider } from './components/UserContext';
-
+import ShoppingCart from './components/ShoppingCart';
+import ProductDetail from './components/ProductDetail';
 function App() {
   return (
     <>
-    <UserProvider>
-    <Router>
-      <div className='container'>
-        <Header/>
-        <Routes>
-          <Route element={<ProductCard/>} path='/'></Route>
-          <Route path='/ShopAll' element={<ShopAll/>} ></Route>
-          <Route path='/Blog' element={<Blog/>} ></Route>
-          <Route path='/Contact' element={<Contact/>} ></Route>
-          <Route path='/About' element={<About/>} ></Route>
-          <Route path='/Login' element={<LoginForm/>} ></Route>
-          <Route path='/Profile' element={<Profile/>} ></Route>
-          <Route path='/showUser' element={<ShowUser/>}></Route>
-          {/* <Route path='/ProductCard' element={<ProductCard/>}></Route> */}
-        </Routes>        
-        <Footer>
-
-        </Footer>
-      </div>
-    </Router>
-    </UserProvider>
+      <UserProvider>
+        <Router>
+          <div className='container'>
+            <Header />
+            <Routes>
+              <Route path='/' element={<ProductCard />}></Route>
+              <Route path='/ShopAll' element={<ShopAll />} ></Route>
+              <Route path='/product/:id' element={<ProductDetail />} />
+              <Route path='/Blog' element={<Blog />} ></Route>
+              <Route path='/Contact' element={<Contact />} ></Route>
+              <Route path='/About' element={<About />} ></Route>
+              <Route path='/Login' element={<LoginForm />} ></Route>
+              <Route path='/Profile' element={<Profile />} ></Route>
+              <Route path='/cart' element={<ShoppingCart/>}></Route>
+              <Route path='/showUser' element={<ShowUser />} ></Route>
+            </Routes>
+            <Footer />
+          </div>
+        </Router>
+      </UserProvider>
     </>
   );
 }

@@ -10,29 +10,34 @@ const LoginForm = () => {
   const { setUser } = useUser();
   const navigate = useNavigate();
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+  
     try {
-      const response = await fetch(`http://localhost:8080/login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {
+      console.log('Attempting to login...');
+      const response = await fetch(`http://localhost:8080/login`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ email, password }),
       });
-
+  
       if (response.ok) {
-        const userData = await response.json();
-
+        const { token, userData } = await response.json();
+        localStorage.setItem('sessionToken', token);
+  
         const { firstName, lastName } = userData;
         const fullName = firstName && lastName ? `${firstName} ${lastName}` : 'Guest';
-        setUser({fullName, ...userData});
+        setUser({ fullName, ...userData });
+  
+        console.log('Login successful, navigating to home page');
         navigate('/');
       } else {
         const errorData = await response.text();
         setError(errorData || 'Login failed');
+        console.error('Login failed:', errorData);
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -46,7 +51,12 @@ const LoginForm = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email:</label>
-        <input type="email" placeholder="Enter Email" id="email" name="email" value={email}
+        <input
+          type="email"
+          placeholder="Enter Email"
+          id="email"
+          name="email"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
@@ -65,6 +75,6 @@ const LoginForm = () => {
       <a href="/profile" style={{ float: "right" }}>Register new user</a>
     </div>
   );
- };
- 
- export default LoginForm;
+};
+
+export default LoginForm;

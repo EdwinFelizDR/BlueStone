@@ -57,12 +57,9 @@ function Profile() {
           return;
         }
   
-        const hashedPassword = await hashPassword(formData.password);
-  
         const dataToSend = {
           ...formData,
-          passwordHash: hashedPassword,
-          password: undefined // Remove the plain text password
+          passwordHash: formData.password // Rename password to passwordHash
         };
   
         console.log('Data being sent to server:', dataToSend);
@@ -91,6 +88,7 @@ function Profile() {
         setError('An error occurred while registering. Please try again.');
       }
     };
+  
 
   return (
     <div className="container-profile">

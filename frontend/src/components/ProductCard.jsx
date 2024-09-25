@@ -33,7 +33,6 @@ function ProductCard() {
   };
 
   const currentProduct = products[currentIndex];
-  console.log('Current product:', currentProduct);
 
   return (
     <section className="product-slider">

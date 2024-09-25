@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "wishlist_items")
-public class Wishlist_Items {
+public class WishlistItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int wishlistItemId;

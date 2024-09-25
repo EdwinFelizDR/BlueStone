@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import ShoppingCart from './ShoppingCart';
 
 const UserContext = createContext();
 

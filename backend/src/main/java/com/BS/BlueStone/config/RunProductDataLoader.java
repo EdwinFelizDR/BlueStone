@@ -1,6 +1,6 @@
 package com.BS.BlueStone.config;
 
-import com.BS.BlueStone.common.ProductsRepo;
+import com.BS.BlueStone.common.ProductRepo;
 import com.BS.BlueStone.model.Products;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,11 +17,11 @@ import java.util.List;
 public class RunProductDataLoader implements CommandLineRunner {
 
     private final Logger logger = LoggerFactory.getLogger(RunProductDataLoader.class);
-    private final ProductsRepo productsRepo;
+    private final ProductRepo productRepo;
     private final ObjectMapper objectMapper;
 
-    public RunProductDataLoader(ProductsRepo productsRepo, ObjectMapper objectMapper) {
-        this.productsRepo = productsRepo;
+    public RunProductDataLoader(ProductRepo productsRepo, ObjectMapper objectMapper) {
+        this.productRepo = productsRepo;
         this.objectMapper = objectMapper;
     }
 
@@ -31,11 +31,11 @@ public class RunProductDataLoader implements CommandLineRunner {
     }
 
     private void loadProductData() {
-        if (productsRepo.count() == 0) {
+        if (productRepo.count() == 0) {
             try (InputStream inputStream = getClass().getResourceAsStream("/data/products.json")) {
                 List<Products> products = objectMapper.readValue(inputStream, new TypeReference<List<Products>>() {});
                 logger.info("Products data loaded successfully {}", products);
-                productsRepo.saveAll(products);
+                productRepo.saveAll(products);
             } catch (IOException e) {
                 throw new RuntimeException("Error loading products data: ", e);
             }
