@@ -3,6 +3,8 @@ package com.BS.BlueStone.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @Getter
 @Setter
@@ -12,11 +14,7 @@ import lombok.*;
 public class Order_Items {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderItemId;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Orders order;
+    private Long order_id;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -27,4 +25,14 @@ public class Order_Items {
 
     @Column(name = "price", nullable = false, precision = 10)
     private double price;
+
+    @Column(name = "order_date", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime orderDate;
+
+    @Column(name = "status", nullable = false, length = 50)
+    private String status;
+
+    @Column(name = "total_amount", nullable = false, precision = 10)
+    private double totalAmount;
+
 }

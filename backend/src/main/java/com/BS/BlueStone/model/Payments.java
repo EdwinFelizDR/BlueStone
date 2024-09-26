@@ -18,7 +18,7 @@ public class Payments {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Orders order;
+    private Order_Items order;
 
     @Column(name = "payment_date", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime paymentDate;
@@ -29,6 +29,4 @@ public class Payments {
     @Column(name = "payment_method", length = 50)
     private String paymentMethod;
 
-    @Column(name = "status", length = 50)
-    private String status;
 }

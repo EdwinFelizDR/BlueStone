@@ -3,6 +3,8 @@ package com.BS.BlueStone.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -43,7 +45,7 @@ public class Users {
     @Column(name = "postal_code")
     private int postalCode;
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<CartItemsDetails> cartItems;
+
 }

@@ -16,15 +16,16 @@ public class CartItemsDetails {
     private int cartItemId;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id")
-    @JsonBackReference
-    private ShoppingCart cart;
-
-    @ManyToOne
     @JoinColumn(name = "product_id")
     private Products product;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users user;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
+    public void save(CartItemsDetails cartItemsDetails) {
+    }
 }

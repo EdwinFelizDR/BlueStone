@@ -8,12 +8,6 @@ const Header = () => {
   const navigate = useNavigate();
   const userContext = useUser();
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, [user, navigate]);
-
   const handleLogout = () => {
     if (userContext && typeof userContext.logout === 'function') {
       try {

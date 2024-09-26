@@ -13,7 +13,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-  
+
     try {
       console.log('Attempting to login...');
       const response = await fetch(`http://localhost:8080/login`, {
@@ -23,15 +23,15 @@ const LoginForm = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-  
+
       if (response.ok) {
         const { token, userData } = await response.json();
-        localStorage.setItem('sessionToken', token);
-  
+        localStorage.setItem('sessionToken', token); // Store token in local storage
+
         const { firstName, lastName } = userData;
         const fullName = firstName && lastName ? `${firstName} ${lastName}` : 'Guest';
-        setUser({ fullName, ...userData });
-  
+        setUser({ fullName, ...userData }); // Update user context
+
         console.log('Login successful, navigating to home page');
         navigate('/');
       } else {

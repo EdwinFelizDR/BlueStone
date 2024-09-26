@@ -4,6 +4,7 @@ import '../css/ShopAll.css';
 
 function ShopAll() {
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -17,6 +18,11 @@ function ShopAll() {
     }
     fetchData();
   }, []);
+
+  const addToCart = (productId) => {
+    setCart((prevCart) => [...prevCart, productId]);
+    console.log('Add to cart:', productId);
+  }
 
   return (
     <div className="shop-all">
@@ -33,7 +39,7 @@ function ShopAll() {
                   <p className='description'>{product.description}</p>
                   <p>${product.price.toFixed(2)}</p>
                 </Link>
-                <button className="add-to-cart">Add to Cart</button>
+                <button className="add-to-cart" onClick={() => addToCart(product.productId)}>Add to Cart</button>
                 <button className="add-to-wishlist">Add to Wishlist</button>
               </div>
             ) : null;

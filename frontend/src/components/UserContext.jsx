@@ -1,5 +1,4 @@
 import React, { createContext, useState, useContext } from 'react';
-import ShoppingCart from './ShoppingCart';
 
 const UserContext = createContext();
 
@@ -15,7 +14,7 @@ export const UserProvider = ({ children }) => {
   };
 
     return (
-    <UserContext.Provider value={{ user, setUser, login, logout }}>
+    <UserContext.Provider value={{ user, setUser, login, logout}}>
       {children}
     </UserContext.Provider>
   );
