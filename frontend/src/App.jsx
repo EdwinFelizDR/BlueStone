@@ -12,7 +12,7 @@ import LoginForm from './components/Login';
 import Profile from './components/Profile';
 import ShowUser from './components/ShowUser';
 import { UserProvider } from './components/UserContext';
-import ShoppingCart from './components/ShoppingCart';
+import CartItems from './components/CartItems';
 import ProductDetail from './components/ProductDetail';
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
               <Route path='/About' element={<About />} ></Route>
               <Route path='/Login' element={<LoginForm />} ></Route>
               <Route path='/Profile' element={<Profile />} ></Route>
-              <Route path='/cart' element={<ShoppingCart/>}></Route>
+              <Route path='/cart' element={<CartItems/>}></Route>
               <Route path='/showUser' element={<ShowUser />} ></Route>
             </Routes>
             <Footer />

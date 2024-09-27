@@ -45,7 +45,4 @@ public class Users {
     @Column(name = "postal_code")
     private int postalCode;
 
-    @OneToMany(mappedBy = "user")
-    private List<CartItemsDetails> cartItems;
-
 }

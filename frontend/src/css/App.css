@@ -101,3 +101,21 @@ header nav ul li a {
    outline: none;
    margin-right: 10px;
 }
+
+.message-box {
+   background-color: #24eded; /* Green for success */
+   color: black;
+   padding: 15px;
+   position: fixed;
+   top: 10px;
+   right: 10px;
+   z-index: 1000;
+   border-radius: 5px;
+   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+   opacity: 0.9;
+   transition: opacity 0.5s ease-in-out;
+ }
+ 
+ .message-box.error {
+   background-color: #f44336; /* Red for error */
+ }

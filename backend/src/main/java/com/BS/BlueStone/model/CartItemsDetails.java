@@ -26,6 +26,4 @@ public class CartItemsDetails {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    public void save(CartItemsDetails cartItemsDetails) {
-    }
 }

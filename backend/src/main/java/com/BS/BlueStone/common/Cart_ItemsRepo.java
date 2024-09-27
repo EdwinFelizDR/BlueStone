@@ -12,7 +12,7 @@ import java.util.Map;
 @Repository
 public interface Cart_ItemsRepo extends JpaRepository<CartItemsDetails, Integer> {
 
-    @Query(value = "SELECT p.product_id, p.name, p.description, p.image_url, p.material, p.price, ci.quantity, (ci.quantity * p.price) AS total_price " +
+    @Query(value = "SELECT ci.cart_item_id, p.product_id, p.name, p.description, p.image_url, p.material, p.price, ci.quantity, (ci.quantity * p.price) AS total_price " +
             "FROM cart_items ci " +
             "JOIN products p ON ci.product_id = p.product_id " +
             "WHERE ci.user_id = :userId", nativeQuery = true)

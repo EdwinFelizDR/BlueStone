@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ReviewsRepo extends JpaRepository<Reviews, Integer> {
-    List<Reviews> findByProduct_ProductId(int productId);
+    // Custom query methods can be added here if needed
+    List<Reviews> findByProductId(Integer productId);
 }

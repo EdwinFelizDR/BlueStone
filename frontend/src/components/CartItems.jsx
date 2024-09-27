@@ -1,53 +1,43 @@
-import React, { useState, useEffect } from "react";
-import { useUser } from "./UserContext";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useUser } from './UserContext';
+import { useNavigate } from 'react-router-dom'; // Ensure you import useNavigate
 
-function ShoppingCart({ userId }) {
-  const [cartItems, setCartItems] = useState([]);
+function CartItems() {
   const { user } = useUser();
-  const navigate = useNavigate();
+  const [cartItems, setCartItems] = useState([]);
+  const navigate = useNavigate(); // Define navigate using useNavigate hook
 
   useEffect(() => {
     if (user) {
       fetch(`http://localhost:8080/cart-items/${user.userId}`)
-        .then((response) => response.json())
-        .then((data) => setCartItems(data))
-        .catch((error) => console.error("Error fetching cart items:", error));
-    } else {
-      setCartItems([]);
+        .then(response => response.json())
+        .then(data => setCartItems(data))
+        .catch(error => console.error('Error fetching cart items:', error));
     }
-  }, [userId, user]);
+  }, [user]);
 
-  const handleIncrement = (productId) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.product_id === productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+  // Increment function for a specific item
+  const handleIncrement = (itemId) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.cartItemId === itemId ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
 
-  const handleDecrement = (productId) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.product_id === productId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
+  // Decrement function for a specific item
+  const handleDecrement = (itemId) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.cartItemId === itemId && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
       )
     );
   };
 
-  if (!user) {
-    return (
-      <div className="font-sans md:max-w-4xl max-md:max-w-xl mx-auto bg-white py-4">
-        <div className="text-center text-gray-800">
-          <h2 className="text-2xl font-bold">Your cart is empty</h2>
-          <p>Please log in to view your cart items.</p>
-        </div>
-      </div>
-    );
-  }
+  // Remove function for a specific item
+  const removeItem = (itemId) => {
+    setCartItems(prevItems => prevItems.filter(item => item.cartItemId !== itemId));
+  };
 
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -59,8 +49,16 @@ function ShoppingCart({ userId }) {
     navigate("/shopall");
   };
 
+  if (!user) {
+    return <div>Please log in to see your cart items.</div>;
+  }
+
   return (
     <>
+      <div>
+        <h2>Cart Items</h2>
+      </div>
+
       <div>
         <div className="font-sans md:max-w-4xl max-md:max-w-xl mx-auto bg-white py-4">
           <div className="grid md:grid-cols-3 gap-4">
@@ -69,9 +67,9 @@ function ShoppingCart({ userId }) {
               <hr className="border-gray-300 mt-4 mb-8" />
 
               <div className="space-y-4">
-                {cartItems.map((item) => (
+                {cartItems.map((item, index) => (
                   <div
-                    key={item.product_id}
+                    key={item.cartItemId || `cart-item-${index}`}
                     className="grid grid-cols-3 items-center gap-4"
                   >
                     <div className="col-span-2 flex items-center gap-4">
@@ -86,7 +84,10 @@ function ShoppingCart({ userId }) {
                         <h3 className="text-base font-bold text-gray-800">
                           {item.name}
                         </h3>
-                        <h6 className="text-xs text-red-500 cursor-pointer mt-0.5">
+                        <h6
+                          className="text-xs text-red-500 cursor-pointer mt-0.5"
+                          onClick={() => removeItem(item.cartItemId)} // Add remove item functionality here
+                        >
                           Remove
                         </h6>
 
@@ -95,7 +96,7 @@ function ShoppingCart({ userId }) {
                             <button
                               type="button"
                               className="flex items-center px-2.5 py-1.5 border border-gray-300 text-gray-800 text-xs outline-none bg-transparent rounded-md"
-                              onClick={() => handleDecrement(item.product_id)}
+                              onClick={() => handleDecrement(item.cartItemId)}
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -113,7 +114,7 @@ function ShoppingCart({ userId }) {
                             <button
                               type="button"
                               className="flex items-center px-2.5 py-1.5 border border-gray-300 text-gray-800 text-xs outline-none bg-transparent rounded-md"
-                              onClick={() => handleIncrement(item.product_id)}
+                              onClick={() => handleIncrement(item.cartItemId)}
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -180,4 +181,4 @@ function ShoppingCart({ userId }) {
   );
 }
 
-export default ShoppingCart;
+export default CartItems;

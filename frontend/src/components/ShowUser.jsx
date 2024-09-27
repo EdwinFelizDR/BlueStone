@@ -9,6 +9,7 @@ function ShowUser() {
         const response = await fetch('http://localhost:8080/users');
         const data = await response.json();
         setUsers(data); // Update the state with the fetched data
+        console.log(data);
       } catch (error) {
         console.error('There was an error!', error);
       }
@@ -37,17 +38,17 @@ function ShowUser() {
           </thead>
           <tbody>
             {users.map(user => (
-              <tr key={user.customer_id}>
-                <td>{user.customer_id}</td>
-                <td>{user.first_name}</td>
-                <td>{user.last_name}</td>
+              <tr key={user.userId}>
+                <td>{user.userId}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
                 <td>{user.email}</td>
-                <td>{user.phone_number}</td>
-                <td>{user.Address1}</td>
-                <td>{user.Address2}</td>
-                <td>{user.City}</td>
-                <td>{user.State}</td>
-                <td>{user.PostalCode}</td>
+                <td>{user.phoneNumber}</td>
+                <td>{user.address1}</td>
+                <td>{user.address2}</td>
+                <td>{user.city}</td>
+                <td>{user.state}</td>
+                <td>{user.postalCode}</td>
               </tr>
             ))}
           </tbody>

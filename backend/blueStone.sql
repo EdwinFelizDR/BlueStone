@@ -6,35 +6,40 @@ select * from users;
 
 drop DATABASE bluestone;
 
+DELETE FROM cart_items
+WHERE `cart_item_id` >= 5;
+
 select * from cart_items;
+select * from  order_items;
 -- Insert test cart items
-INSERT INTO cart_items (cart_item_id, product_id, quantity)
+INSERT INTO cart_items (cart_item_id, product_id, quantity,user_id)
 VALUES 
 (1, 1, 2, 1),
-(1, 2, 1, 1),
-(2, 4, 2, 2),
-(2, 5, 1, 2);
+(2, 2, 1, 1),
+(3, 4, 2, 2),
+(4, 5, 1, 2);
 
+
+show columns from users;
+show columns from products;
+show columns from cart_items;
 
 select * from cart_items;
 SELECT * from shopping_Cart;
 select * from users;
 -- show products by user
 SELECT 
-    u.first_name,
-    u.last_name,
-    p.name AS product_name,
+    p.product_id,
+    p.name,
     p.description,
+    p.image_url,
+    p.material,
     p.price,
     ci.quantity,
-    (p.price * ci.quantity) AS total_price
+    (ci.quantity * p.price) AS total_price
 FROM 
-    users u
+    cart_items ci
 JOIN 
-    Shopping_Cart sc ON u.user_id = sc.user_id
-JOIN 
-    Cart_Items ci ON sc.cart_id = ci.cart_id
-JOIN 
-    Products p ON ci.product_id = p.product_id
+    products p ON ci.product_id = p.product_id
 WHERE 
-    u.user_id = 1;  -- Replace '?' with the specific user's ID
+    ci.user_id = 1; -- Replace ? with the specific user's ID

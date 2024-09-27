@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
-import "../css/ProductCard.css"; // Ensure the path is correct
+import { useUser } from './UserContext'; // Import useUser to get the current user
+import "../css/ProductCard.css";
+import "../css/App.css";
 
 function ProductCard() {
   const [products, setProducts] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { user } = useUser(); // Get the current user
+  const [message, setMessage] = useState(''); // State for success/error messages
 
   useEffect(() => {
     async function fetchData() {
@@ -12,12 +17,11 @@ function ProductCard() {
         setProducts(data); // Update the state with the fetched data
       } catch (error) {
         console.error("There was an error!", error);
+        setMessage('Error fetching products.');
       }
     }
     fetchData();
   }, []);
-
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!products || products.length === 0) {
     return <div>No products available</div>;
@@ -37,9 +41,48 @@ function ProductCard() {
 
   const currentProduct = products[currentIndex];
 
+  // Function to handle the add-to-cart functionality
+  const addToCart = async () => {
+    if (!user) {
+      setMessage('Please log in to add items to your cart.');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/add-to-cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          product_id: currentProduct.productId, // Assuming currentProduct has a productId field
+          user_id: user.userId,  // Use userId from context
+          quantity: 1            // Default quantity is 1
+        }),
+      });
+
+      if (response.ok) {
+        setMessage('Product added to cart successfully!');
+      } else {
+        setMessage('Failed to add product to cart.');
+      }
+
+      // Clear the message after 3 seconds
+      setTimeout(() => {
+        setMessage('');
+      }, 3000);
+    } catch (error) {
+      console.error('There was an error!', error);
+      setMessage('An error occurred while adding the product to the cart.');
+    }
+  };
+
   return (
     <section className="product-slider">
       <div className="product-card">
+        {/* Display the message */}
+        {message && <div className="message-box">{message}</div>}
+
         <div className="product-details">
           <h2>{currentProduct.name}</h2>
           <div>
@@ -53,7 +96,9 @@ function ProductCard() {
           <p className="price">${currentProduct.price}</p>
         </div>
         <div className="product-actions">
-          <button className="add-to-cart">Add to Cart</button>
+          <button className="add-to-cart" onClick={addToCart}>
+            Add to Cart
+          </button>
           <button className="add-to-wishlist">Add to Wishlist</button>
         </div>
         <div className="navigation">

@@ -15,11 +15,9 @@ const Header = () => {
         localStorage.removeItem('sessionToken'); // Clear session token
         navigate('/login'); // Navigate to login page
       } catch (error) {
-        console.error('Error during logout:', error);
         alert('An error occurred while logging out. Please try again.');
       }
     } else {
-      console.error('logout is not a function', userContext);
       alert('Unable to logout at the moment. Please try again later.');
     }
   };
@@ -48,7 +46,7 @@ const Header = () => {
         </div>
       </div>
       <div className='logout'>
-        <p>Welcome, {user ? user.fullName || 'Guest' : 'Guest'}</p>
+        <p>Welcome, {user ? user.firstName+" "+user.lastName || 'Guest' : 'Guest'}</p>
         {user && <button onClick={handleLogout}>Logout</button>}
       </div>
       <div className="search-box">
