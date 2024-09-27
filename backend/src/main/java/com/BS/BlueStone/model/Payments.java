@@ -26,7 +26,4 @@ public class Payments {
     @Column(name = "amount", nullable = false, precision = 10)
     private double amount;
 
-    @Column(name = "payment_method", length = 50)
-    private String paymentMethod;
-
 }
