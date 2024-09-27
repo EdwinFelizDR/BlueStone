@@ -1,259 +1,373 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/Checkout.css";
 
-
 function Checkout() {
+  const [sameAsBilling, setSameAsBilling] = useState(true); // State to track checkbox
+  const [billingAddress, setBillingAddress] = useState({
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    address: "",
+    address2: "",
+    country: "",
+    state: "",
+    zip: "",
+  }); // State for billing address
+
+  const [shippingAddress, setShippingAddress] = useState({
+    address: "",
+    address2: "",
+    country: "",
+    state: "",
+    zip: "",
+  }); // State for shipping address
+
+  const [paymentDetails, setPaymentDetails] = useState({
+    nameOnCard: "",
+    cardNumber: "",
+    expiration: "",
+    cvv: "",
+  }); // State for payment details
+
+  const [errors, setErrors] = useState({}); // State to track errors
+
+  // Handle billing address changes
+  const handleBillingChange = (e) => {
+    setBillingAddress({
+      ...billingAddress,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  // Handle shipping address changes
+  const handleShippingChange = (e) => {
+    setShippingAddress({
+      ...shippingAddress,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  // Handle payment details changes
+  const handlePaymentChange = (e) => {
+    setPaymentDetails({
+      ...paymentDetails,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  // Toggle shipping address visibility
+  const handleSameAsBillingToggle = () => {
+    setSameAsBilling(!sameAsBilling);
+    if (sameAsBilling) {
+      // Clear shipping address when the checkbox is unchecked
+      setShippingAddress({
+        address: "",
+        address2: "",
+        country: "",
+        state: "",
+        zip: "",
+      });
+    }
+  };
+
+  // Form validation logic
+  const validateForm = () => {
+    const newErrors = {};
+
+    // Validate billing address
+    if (!billingAddress.firstName) newErrors.firstName = "First name is required.";
+    if (!billingAddress.lastName) newErrors.lastName = "Last name is required.";
+    if (!billingAddress.username) newErrors.username = "Username is required.";
+    if (!billingAddress.email || !/\S+@\S+\.\S+/.test(billingAddress.email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+    if (!billingAddress.address) newErrors.address = "Billing address is required.";
+    if (!billingAddress.country) newErrors.country = "Please select a country.";
+    if (!billingAddress.state) newErrors.state = "Please select a state.";
+    if (!billingAddress.zip) newErrors.zip = "Zip code is required.";
+
+    // If shipping address is not the same as billing, validate the shipping fields
+    if (!sameAsBilling) {
+      if (!shippingAddress.address) newErrors.shippingAddress = "Shipping address is required.";
+      if (!shippingAddress.country) newErrors.shippingCountry = "Please select a shipping country.";
+      if (!shippingAddress.state) newErrors.shippingState = "Please select a shipping state.";
+      if (!shippingAddress.zip) newErrors.shippingZip = "Shipping zip code is required.";
+    }
+
+    // Validate payment details
+    if (!paymentDetails.nameOnCard) newErrors.nameOnCard = "Name on card is required.";
+    if (!paymentDetails.cardNumber || paymentDetails.cardNumber.length < 16) {
+      newErrors.cardNumber = "Valid credit card number is required.";
+    }
+    if (!paymentDetails.expiration) newErrors.expiration = "Expiration date is required.";
+    if (!paymentDetails.cvv || paymentDetails.cvv.length !== 3) {
+      newErrors.cvv = "Security code (CVV) is required.";
+    }
+
+    return newErrors;
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formErrors = validateForm();
+    setErrors(formErrors);
+
+    if (Object.keys(formErrors).length === 0) {
+      // Submit the form or handle submission logic here
+      alert("Order submitted successfully!");
+    }
+  };
+
   return (
     <main id="main" role="main" className="container">
       <section id="checkout-container" className="section">
-        <div>
-          <div>
-            <div>
-              <h4>Billing address</h4>
-              <form noValidate>
-                <div className="form-group">
-                  <div className="form-group">
-                    <label htmlFor="firstName" className="label">
-                      First name
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      placeholder=""
-                      required
-                      className="input"
-                    />
-                    <div className="error-message">
-                      Valid first name is required.
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="lastName" className="label">
-                      Last name
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      placeholder=""
-                      required
-                      className="input"
-                    />
-                    <div className="error-message">
-                      Valid last name is required.
-                    </div>
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="username" className="label">
-                    Username
-                  </label>
-                  <div className="form-group">
-                    <div>
-                      <span>@</span>
-                    </div>
-                    <input
-                      type="text"
-                      id="username"
-                      placeholder="Username"
-                      required
-                      className="input"
-                    />
-                    <div className="error-message">Your username is required.</div>
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email" className="label">
-                    Email <span>(Optional)</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    placeholder="you@example.com"
-                    className="input"
-                  />
-                  <div className="error-message">
-                    Please enter a valid email address for shipping updates.
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="address" className="label">
-                    Address
-                  </label>
-                  <input
-                    type="text"
-                    id="address"
-                    placeholder="1234 Main St"
-                    required
-                    className="input"
-                  />
-                  <div className="error-message">
-                    Please enter your shipping address.
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="address2" className="label">
-                    Address 2 <span>(Optional)</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="address2"
-                    placeholder="Apartment or suite"
-                    className="input"
-                  />
-                </div>
-
-                <div className="form-group">
-                  <div className="form-group">
-                    <label htmlFor="country" className="label">
-                      Country
-                    </label>
-                    <select id="country" required className="input">
-                      <option value="">Choose...</option>
-                      <option>United States</option>
-                    </select>
-                    <div className="error-message">
-                      Please select a valid country.
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="state" className="label">
-                      State
-                    </label>
-                    <select id="state" required className="input">
-                      <option value="">Choose...</option>
-                      <option>California</option>
-                    </select>
-                    <div className="error-message">
-                      Please provide a valid state.
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="zip" className="label">
-                      Zip
-                    </label>
-                    <input
-                      type="text"
-                      id="zip"
-                      placeholder=""
-                      required
-                      className="input"
-                    />
-                    <div className="error-message">Zip code required.</div>
-                  </div>
-                </div>
-                <hr className="hr" />
-                <div className="form-group">
-                  <input type="checkbox" id="same-address" />
-                  <label htmlFor="same-address">
-                    Shipping address is the same as my billing address
-                  </label>
-                </div>
-                <div className="form-group">
-                  <input type="checkbox" id="save-info" />
-                  <label htmlFor="save-info">
-                    Save this information for next time
-                  </label>
-                </div>
-                <hr className="hr" />
-
-                <h4>Payment</h4>
-
-                <div className="form-group">
-                  <div className="form-group">
-                    <input
-                      id="credit"
-                      name="paymentMethod"
-                      type="radio"
-                      defaultChecked
-                      required
-                    />
-                    <label htmlFor="credit">Credit card</label>
-                  </div>
-                  <div className="form-group">
-                    <input id="debit" name="paymentMethod" type="radio" required />
-                    <label htmlFor="debit">Debit card</label>
-                  </div>
-                  <div className="form-group">
-                    <input id="paypal" name="paymentMethod" type="radio" required />
-                    <label htmlFor="paypal">Paypal</label>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <div className="form-group">
-                    <label htmlFor="cc-name" className="label">
-                      Name on card
-                    </label>
-                    <input
-                      type="text"
-                      id="cc-name"
-                      placeholder=""
-                      required
-                      className="input"
-                    />
-                    <small className="small-text">
-                      Full name as displayed on card
-                    </small>
-                    <div className="error-message">Name on card is required</div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="cc-number" className="label">
-                      Credit card number
-                    </label>
-                    <input
-                      type="text"
-                      id="cc-number"
-                      placeholder=""
-                      required
-                      className="input"
-                    />
-                    <div className="error-message">
-                      Credit card number is required
-                    </div>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <div className="form-group">
-                    <label htmlFor="cc-expiration" className="label">
-                      Expiration
-                    </label>
-                    <input
-                      type="text"
-                      id="cc-expiration"
-                      placeholder=""
-                      required
-                      className="input"
-                    />
-                    <div className="error-message">Expiration date required</div>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="cc-cvv" className="label">
-                      CVV
-                    </label>
-                    <input
-                      type="text"
-                      id="cc-cvv"
-                      placeholder=""
-                      required
-                      className="input"
-                    />
-                    <div className="error-message">Security code required</div>
-                  </div>
-                </div>
-                <hr className="hr" />
-                <button type="submit" className="button">
-                  Place order
-                </button>
-              </form>
-            </div>
+        <h4>Billing address</h4>
+        <form onSubmit={handleSubmit} noValidate>
+          {/* Billing Address Fields */}
+          <div className="form-group">
+            <label htmlFor="firstName" className="label">First name</label>
+            <input
+              type="text"
+              id="firstName"
+              className="input"
+              value={billingAddress.firstName}
+              onChange={handleBillingChange}
+              required
+            />
+            {errors.firstName && <div className="error-message">{errors.firstName}</div>}
           </div>
-        </div>
-        <a href="#">
-          <i></i>
-        </a>
+
+          <div className="form-group">
+            <label htmlFor="lastName" className="label">Last name</label>
+            <input
+              type="text"
+              id="lastName"
+              className="input"
+              value={billingAddress.lastName}
+              onChange={handleBillingChange}
+              required
+            />
+            {errors.lastName && <div className="error-message">{errors.lastName}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="username" className="label">Username</label>
+            <input
+              type="text"
+              id="username"
+              className="input"
+              value={billingAddress.username}
+              onChange={handleBillingChange}
+              required
+            />
+            {errors.username && <div className="error-message">{errors.username}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email" className="label">Email <span>(Optional)</span></label>
+            <input
+              type="email"
+              id="email"
+              className="input"
+              value={billingAddress.email}
+              onChange={handleBillingChange}
+            />
+            {errors.email && <div className="error-message">{errors.email}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="address" className="label">Address</label>
+            <input
+              type="text"
+              id="address"
+              className="input"
+              value={billingAddress.address}
+              onChange={handleBillingChange}
+              required
+            />
+            {errors.address && <div className="error-message">{errors.address}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="country" className="label">Country</label>
+            <select
+              id="country"
+              className="input"
+              value={billingAddress.country}
+              onChange={handleBillingChange}
+              required
+            >
+              <option value="">Choose...</option>
+              <option>United States</option>
+            </select>
+            {errors.country && <div className="error-message">{errors.country}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="state" className="label">State</label>
+            <select
+              id="state"
+              className="input"
+              value={billingAddress.state}
+              onChange={handleBillingChange}
+              required
+            >
+              <option value="">Choose...</option>
+              <option>California</option>
+            </select>
+            {errors.state && <div className="error-message">{errors.state}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="zip" className="label">Zip</label>
+            <input
+              type="text"
+              id="zip"
+              className="input"
+              value={billingAddress.zip}
+              onChange={handleBillingChange}
+              required
+            />
+            {errors.zip && <div className="error-message">{errors.zip}</div>}
+          </div>
+
+          {/* Same as Billing Checkbox */}
+          <div className="form-group">
+            <input
+              type="checkbox"
+              id="same-address"
+              checked={sameAsBilling}
+              onChange={handleSameAsBillingToggle}
+            />
+            <label htmlFor="same-address">
+              Shipping address is the same as my billing address
+            </label>
+          </div>
+
+          {/* Conditional Shipping Address Fields */}
+          {!sameAsBilling && (
+            <>
+              <h4>Shipping Address</h4>
+
+              <div className="form-group">
+                <label htmlFor="shippingAddress" className="label">Address</label>
+                <input
+                  type="text"
+                  id="address"
+                  className="input"
+                  value={shippingAddress.address}
+                  onChange={handleShippingChange}
+                  required
+                />
+                {errors.shippingAddress && <div className="error-message">{errors.shippingAddress}</div>}
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="shippingCountry" className="label">Country</label>
+                <select
+                  id="country"
+                  className="input"
+                  value={shippingAddress.country}
+                  onChange={handleShippingChange}
+                  required
+                >
+                  <option value="">Choose...</option>
+                  <option>United States</option>
+                </select>
+                {errors.shippingCountry && <div className="error-message">{errors.shippingCountry}</div>}
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="shippingState" className="label">State</label>
+                <select
+                  id="state"
+                  className="input"
+                  value={shippingAddress.state}
+                  onChange={handleShippingChange}
+                  required
+                >
+                  <option value="">Choose...</option>
+                  <option>California</option>
+                </select>
+                {errors.shippingState && <div className="error-message">{errors.shippingState}</div>}
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="shippingZip" className="label">Zip</label>
+                <input
+                  type="text"
+                  id="zip"
+                  className="input"
+                  value={shippingAddress.zip}
+                  onChange={handleShippingChange}
+                  required
+                />
+                {errors.shippingZip && <div className="error-message">{errors.shippingZip}</div>}
+              </div>
+            </>
+          )}
+
+          {/* Payment Information */}
+          <h4>Payment</h4>
+
+          <div className="form-group">
+            <label htmlFor="nameOnCard" className="label">Name on card</label>
+            <input
+              type="text"
+              id="nameOnCard"
+              className="input"
+              value={paymentDetails.nameOnCard}
+              onChange={handlePaymentChange}
+              required
+            />
+            {errors.nameOnCard && <div className="error-message">{errors.nameOnCard}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="cardNumber" className="label">Credit card number</label>
+            <input
+              type="text"
+              id="cardNumber"
+              className="input"
+              value={paymentDetails.cardNumber}
+              onChange={handlePaymentChange}
+              required
+            />
+            {errors.cardNumber && <div className="error-message">{errors.cardNumber}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="expiration" className="label">Expiration</label>
+            <input
+              type="text"
+              id="expiration"
+              className="input"
+              value={paymentDetails.expiration}
+              onChange={handlePaymentChange}
+              required
+            />
+            {errors.expiration && <div className="error-message">{errors.expiration}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="cvv" className="label">CVV</label>
+            <input
+              type="text"
+              id="cvv"
+              className="input"
+              value={paymentDetails.cvv}
+              onChange={handlePaymentChange}
+              required
+            />
+            {errors.cvv && <div className="error-message">{errors.cvv}</div>}
+          </div>
+
+          <button type="submit" className="button">
+            Place order
+          </button>
+        </form>
       </section>
     </main>
   );
