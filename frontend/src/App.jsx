@@ -14,6 +14,7 @@ import ShowUser from './components/ShowUser';
 import { UserProvider } from './components/UserContext';
 import CartItems from './components/CartItems';
 import ProductDetail from './components/ProductDetail';
+import Checkout from './components/Checkout';
 function App() {
   return (
     <>
@@ -32,6 +33,8 @@ function App() {
               <Route path='/Profile' element={<Profile />} ></Route>
               <Route path='/cart' element={<CartItems/>}></Route>
               <Route path='/showUser' element={<ShowUser />} ></Route>
+              <Route path='/checkout' element={<Checkout/>} />
+              <Route path='*' element={<h1>Not Found</h1>} />
             </Routes>
             <Footer />
           </div>

@@ -4,6 +4,8 @@ package com.BS.BlueStone.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Getter
 @Setter
@@ -39,4 +41,5 @@ public class Products {
 
     @Column(name = "imageUrl", length = 200)
     private String imageUrl;
+    
 }

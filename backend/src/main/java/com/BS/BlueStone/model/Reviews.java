@@ -23,8 +23,11 @@ public class Reviews {
     private Users user;
 
     @Column(name = "rating", nullable = false)
-    private int rating;
+    private double rating;
 
     @Column(name = "comment", columnDefinition = "TEXT")
     private String comment;
+
+    @Column(name = "date", nullable = false)
+    private String date;
 }

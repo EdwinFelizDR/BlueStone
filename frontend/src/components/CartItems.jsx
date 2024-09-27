@@ -49,6 +49,10 @@ function CartItems() {
     navigate("/shopall");
   };
 
+  const navigateToCheckout = () => {
+    navigate("/checkout");
+  };
+
   if (!user) {
     return <div>Please log in to see your cart items.</div>;
   }
@@ -162,6 +166,7 @@ function CartItems() {
                 <button
                   type="button"
                   className="text-sm px-4 py-2.5 w-full font-semibold tracking-wide bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+                  onClick={navigateToCheckout}
                 >
                   Checkout
                 </button>
