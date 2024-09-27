@@ -1,4 +1,4 @@
-# Project Title
+# Blue Stone
 
 Blue Stone is a store dedicated to selling exquisite Larimar jewelry products.
 
