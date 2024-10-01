@@ -8,7 +8,7 @@ function Contact() {
       <main>
         <section className="contact-section">
           <div className="contact-info">
-            <h1>Contact Details</h1>
+            <h1 class="text-2xl font-bold">Contact Details</h1>
             <p>
               <span className="icon" style={{ fontSize: '24px' }}>📞</span>
               <span className='span-text'>Phone: 923-456-7890</span>

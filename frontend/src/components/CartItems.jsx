@@ -20,7 +20,7 @@ function CartItems() {
   const handleIncrement = (itemId) => {
     setCartItems(prevItems =>
       prevItems.map(item =>
-        item.cartItemId === itemId ? { ...item, quantity: item.quantity + 1 } : item
+        item.cart_item_id === itemId ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
@@ -29,14 +29,14 @@ function CartItems() {
   const handleDecrement = (itemId) => {
     setCartItems(prevItems =>
       prevItems.map(item =>
-        item.cartItemId === itemId && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+        item.cart_item_id === itemId && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
       )
     );
   };
 
   // Remove function for a specific item
   const removeItem = (itemId) => {
-    setCartItems(prevItems => prevItems.filter(item => item.cartItemId !== itemId));
+    setCartItems(prevItems => prevItems.filter(item => item.cart_item_id !== itemId));
   };
 
   const totalPrice = cartItems.reduce(
@@ -73,7 +73,7 @@ function CartItems() {
               <div className="space-y-4">
                 {cartItems.map((item, index) => (
                   <div
-                    key={item.cartItemId || `cart-item-${index}`}
+                    key={item.cart_item_id || `cart-item-${index}`}
                     className="grid grid-cols-3 items-center gap-4"
                   >
                     <div className="col-span-2 flex items-center gap-4">
@@ -90,7 +90,7 @@ function CartItems() {
                         </h3>
                         <h6
                           className="text-xs text-red-500 cursor-pointer mt-0.5"
-                          onClick={() => removeItem(item.cartItemId)} // Add remove item functionality here
+                          onClick={() => removeItem(item.cart_item_id)} // Add remove item functionality here
                         >
                           Remove
                         </h6>
@@ -100,7 +100,7 @@ function CartItems() {
                             <button
                               type="button"
                               className="flex items-center px-2.5 py-1.5 border border-gray-300 text-gray-800 text-xs outline-none bg-transparent rounded-md"
-                              onClick={() => handleDecrement(item.cartItemId)}
+                              onClick={() => handleDecrement(item.cart_item_id)}
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +118,7 @@ function CartItems() {
                             <button
                               type="button"
                               className="flex items-center px-2.5 py-1.5 border border-gray-300 text-gray-800 text-xs outline-none bg-transparent rounded-md"
-                              onClick={() => handleIncrement(item.cartItemId)}
+                              onClick={() => handleIncrement(item.cart_item_id)}
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"

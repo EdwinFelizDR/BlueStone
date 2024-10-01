@@ -3,6 +3,7 @@
    justify-content: center;
    align-items: center;
    margin-top: 30px;
+   margin-bottom: 50px;
 }
 
 /* Contact details Styles */
@@ -12,6 +13,7 @@
    border-radius: 8px;
    width: 400px;
    height: 470px;
+   padding: 2rem;
    }
 
 .span-text{
@@ -24,7 +26,7 @@
 /* Contact Form Styles */
 .contact-form {
    width: 400px;
-   height: 400px;
+   height: 470px;
    margin-left: 2rem;
    padding: 2rem;
    background-color: #f9f9f9;
