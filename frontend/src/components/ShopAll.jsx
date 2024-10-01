@@ -4,7 +4,7 @@ import '../css/ShopAll.css';
 import '../css/App.css';
 import { useUser } from './UserContext';
 
-function ShopAll() {
+function ShopAll({ searchQuery }) {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [message, setMessage] = useState(''); // State for success/error messages
@@ -22,6 +22,12 @@ function ShopAll() {
     }
     fetchData();
   }, []);
+
+    // Filter products based on the search query
+    const filteredProducts = products.filter(product =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   // Function to handle the add-to-cart functionality
   const addToCart = async (productId) => {
@@ -65,8 +71,8 @@ function ShopAll() {
       {/* Display success/error message */}
       {message && <div className="message-box">{message}</div>}
       <div className="product-grid">
-        {products && products.length > 0 ? (
-          products.map((product, index) => {
+      {filteredProducts && filteredProducts.length > 0 ? (
+          filteredProducts.map((product, index) => {
             const productUrl = `/product/${product.productId || 'unknown'}`;
             return product ? (
               <div key={product.id || `unknown-${index}`} className="product-card">

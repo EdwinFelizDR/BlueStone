@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from './UserContext';
 import '../css/App.css';
 
-const Header = () => {
+const Header = ({ searchQuery, setSearchQuery }) => { // Accept search props
   const { user, logout } = useUser();
   const navigate = useNavigate();
+  const location = useLocation(); // Access the current location
   const userContext = useUser();
 
   const handleLogout = () => {
@@ -49,10 +50,14 @@ const Header = () => {
         <p>Welcome, {user ? user.firstName+" "+user.lastName || 'Guest' : 'Guest'}</p>
         {user && <button onClick={handleLogout}>Logout</button>}
       </div>
-      <div className="search-box">
-        <input type="text" placeholder="Search..." style={{ height: '25px' }} />
-        <button className="icon">🔍</button>
-      </div>
+      {/* Render the search box only on the /shopall page */}
+      {location.pathname === '/shopall' && (
+        <div className="search-box">
+          <input type="text" placeholder="Search..." style={{ height: '25px' }} value={searchQuery} 
+          onChange={(e) => setSearchQuery(e.target.value)}/> 
+          <button className="icon">🔍</button>
+        </div>
+      )}
     </header>
   );
 };

@@ -15,16 +15,20 @@ import { UserProvider } from './components/UserContext';
 import CartItems from './components/CartItems';
 import ProductDetail from './components/ProductDetail';
 import Checkout from './components/Checkout';
+import { useState } from 'react';
+
 function App() {
+  const [searchQuery, setSearchQuery] = useState(''); // Add search query state
+
   return (
     <>
       <UserProvider>
         <Router>
           <div className='container'>
-            <Header />
+            <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} /> {/* Pass search props */}
             <Routes>
               <Route path='/' element={<ProductCard />}></Route>
-              <Route path='/ShopAll' element={<ShopAll />} ></Route>
+              <Route path='/ShopAll' element={<ShopAll searchQuery={searchQuery}/>} ></Route> {/* Pass search query */}
               <Route path='/product/:id' element={<ProductDetail />} />
               <Route path='/Blog' element={<Blog />} ></Route>
               <Route path='/Contact' element={<Contact />} ></Route>
