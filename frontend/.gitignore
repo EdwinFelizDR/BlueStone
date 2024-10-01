@@ -25,6 +25,7 @@ dist-ssr
 
 #Folders to ignore
 imgs/new images
+./blueStone/frontend.html
 
 #Files to ignore
 imgs/Video Project 2.mp4
