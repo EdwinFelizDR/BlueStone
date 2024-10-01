@@ -15,6 +15,11 @@ function ProductCard() {
         const response = await fetch("http://localhost:8080/ProductCard");
         const data = await response.json();
         setProducts(data); // Update the state with the fetched data
+
+        // Set a random index as the initial product
+        const randomIndex = Math.floor(Math.random() * data.length);
+        setCurrentIndex(randomIndex);
+
       } catch (error) {
         console.error("There was an error!", error);
         setMessage('Error fetching products.');
@@ -85,7 +90,7 @@ function ProductCard() {
 
         <div className="product-details">
           <h2>{currentProduct.name}</h2>
-          <div>
+          <div className="product-image-container">
             <img
               src={currentProduct.imageUrl}
               alt={currentProduct.name}
