@@ -24,11 +24,10 @@ dist-ssr
 *.sw?
 
 #Folders to ignore
-imgs\new images
-
+imgs/new images
 
 #Files to ignore
-imgs\Video Project 2.mp4
-imgs\larimar audio.mp4
-imgs\larimar subtitles.mp4
-imgs\larimar.mp4
+imgs/Video Project 2.mp4
+imgs/larimar audio.mp4
+imgs/larimar subtitles.mp4
+imgs/larimar.mp4
