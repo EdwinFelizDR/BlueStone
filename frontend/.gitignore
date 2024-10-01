@@ -1,0 +1,36 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+#Folders to ignore
+imgs/new images
+
+#Files to ignore
+imgs/Video Project 2.mp4
+imgs/larimar audio.mp4
+imgs/larimar subtitles.mp4
+imgs/larimar.mp4
+imgs/*.mp4
+/frontend/imgs/*.mp4
+*.mp4
