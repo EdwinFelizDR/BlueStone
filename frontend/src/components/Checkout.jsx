@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../css/Checkout.css";
+import { jsPDF } from "jspdf";
 
 function Checkout() {
   const [sameAsBilling, setSameAsBilling] = useState(true); // State to track checkbox
@@ -108,6 +109,27 @@ function Checkout() {
     return newErrors;
   };
 
+    // Generate PDF with order details
+    const generatePDF = () => {
+      const doc = new jsPDF();
+      
+      // Add content to the PDF
+      doc.text("Order Receipt", 10, 10);
+      doc.text(`Name: ${billingAddress.firstName} ${billingAddress.lastName}`, 10, 20);
+      doc.text(`Email: ${billingAddress.email}`, 10, 30);
+      doc.text(`Billing Address: ${billingAddress.address}, ${billingAddress.state}, ${billingAddress.zip}`, 10, 40);
+  
+      if (!sameAsBilling) {
+        doc.text(`Shipping Address: ${shippingAddress.address}, ${shippingAddress.state}, ${shippingAddress.zip}`, 10, 50);
+      }
+  
+      doc.text(`Payment: ${paymentDetails.cardNumber.replace(/\d(?=\d{4})/g, "*")}`, 10, 60);
+      doc.text(`Name on Card: ${paymentDetails.nameOnCard}`, 10, 70);
+  
+      // Save the PDF
+      doc.save("order-receipt.pdf");
+    };
+
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -117,6 +139,7 @@ function Checkout() {
     if (Object.keys(formErrors).length === 0) {
       // Submit the form or handle submission logic here
       alert("Order submitted successfully!");
+      generatePDF(); // Call function to generate and download PDF
     }
   };
 
@@ -153,26 +176,14 @@ function Checkout() {
           </div>
 
           <div className="form-group">
-            <label htmlFor="username" className="label">Username</label>
-            <input
-              type="text"
-              id="username"
-              className="input"
-              value={billingAddress.username}
-              onChange={handleBillingChange}
-              required
-            />
-            {errors.username && <div className="error-message">{errors.username}</div>}
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="email" className="label">Email <span>(Optional)</span></label>
+            <label htmlFor="email" className="label">Email <span>(Required)</span></label>
             <input
               type="email"
               id="email"
               className="input"
               value={billingAddress.email}
               onChange={handleBillingChange}
+              required
             />
             {errors.email && <div className="error-message">{errors.email}</div>}
           </div>
@@ -216,6 +227,7 @@ function Checkout() {
             >
               <option value="">Choose...</option>
               <option>California</option>
+              <option>New York</option>
             </select>
             {errors.state && <div className="error-message">{errors.state}</div>}
           </div>

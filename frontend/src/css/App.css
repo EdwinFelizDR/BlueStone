@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-   max-width: 800px; /* Set the maximum width */
+   max-width: auto; /* Set the maximum width */
    margin: 0 auto;    /* Center the container */
    padding: 0 15px;   /* Optional: Add some padding */
 }

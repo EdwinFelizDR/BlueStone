@@ -34,13 +34,18 @@ function ProductDetail() {
         // Fetch reviews for this product
         const reviewsResponse = await fetch(`http://localhost:8080/reviews/${productId}`);
         if (!reviewsResponse.ok) {
-          throw new Error(`HTTP error! status: ${reviewsResponse.status}`);
+          if (reviewsResponse.status === 404) {
+            // Handle 404 - no reviews found
+            setReviews([]);  // No reviews, set empty array
+          } else {
+            throw new Error(`HTTP error! status: ${reviewsResponse.status}`);
+          }
+        } else {
+          const reviewsData = await reviewsResponse.json();
+          setReviews(reviewsData);
         }
-        const reviewsData = await reviewsResponse.json();
-        setReviews(reviewsData);
 
       } catch (error) {
-        setReviews =  [];
         console.error('There was an error fetching the product or reviews:', error);
         setError("Failed to fetch product or reviews");
       }
@@ -86,7 +91,6 @@ function ProductDetail() {
       )}
     </div>
   );
-  
 }
 
 export default ProductDetail;
