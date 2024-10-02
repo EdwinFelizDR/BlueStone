@@ -40,6 +40,7 @@ function ProductDetail() {
         setReviews(reviewsData);
 
       } catch (error) {
+        setReviews =  [];
         console.error('There was an error fetching the product or reviews:', error);
         setError("Failed to fetch product or reviews");
       }
@@ -67,14 +68,14 @@ function ProductDetail() {
         <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add to Cart</button>
         <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Add to Wishlist</button>
       </div>
-
+  
       {/* Product Reviews */}
       <h2 className="text-2xl font-bold mt-8 mb-4">Customer Reviews</h2>
       {reviews.length === 0 ? (
-        <p className="text-gray-500">No reviews for this product yet.</p>
+        <p className="text-gray-500">No reviews yet.</p>
       ) : (
         <ul className="space-y-4">
-          {reviews.map(review => (
+          {reviews.map((review) => (
             <li key={review.reviewId} className="border-b pb-4">
               <p><strong>Rating:</strong> {review.rating}</p>
               <p>{review.comment}</p>
@@ -85,6 +86,7 @@ function ProductDetail() {
       )}
     </div>
   );
+  
 }
 
 export default ProductDetail;

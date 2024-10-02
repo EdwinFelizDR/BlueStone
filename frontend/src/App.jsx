@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Contact from './components/Contact';
 import About from './components/about';
 import ShopAll from './components/ShopAll';
-import Blog from './components/Blog';
 import LoginForm from './components/Login';
 import Profile from './components/Profile';
 import ShowUser from './components/ShowUser';
@@ -30,7 +29,6 @@ function App() {
               <Route path='/' element={<ProductCard />}></Route>
               <Route path='/ShopAll' element={<ShopAll searchQuery={searchQuery}/>} ></Route> {/* Pass search query */}
               <Route path='/product/:id' element={<ProductDetail />} />
-              <Route path='/Blog' element={<Blog />} ></Route>
               <Route path='/Contact' element={<Contact />} ></Route>
               <Route path='/About' element={<About />} ></Route>
               <Route path='/Login' element={<LoginForm />} ></Route>

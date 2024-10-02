@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   padding: 2rem;
+  flex-direction: column; /* Ensure that elements stack vertically */
 }
 
 .product-card {
@@ -80,4 +80,13 @@
   font-size: 2em;
   cursor: pointer;
 }
+
+.video-container {
+  display: flex;
+  justify-content: center; /* Center the video horizontally */
+  align-items: center; /* Center the video vertically (if needed) */
+  padding-top: 10px;
+  margin-bottom: 10px; /* Add some space below the video before the product card */
+}
+
 

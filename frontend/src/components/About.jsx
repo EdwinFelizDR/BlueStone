@@ -26,7 +26,7 @@ function about() {
             <p>
                 - Larimar is a type of pectolite mineral, formed when volcanic 
                 lava meets cool sea waters. Its unique composition includes cobalt 
-                or copper, giving it those distinct blue shades[^1^][1].
+                or copper, giving it those distinct blue shades.
             </p>
         </div>
         <hr className='separator'/>
@@ -36,7 +36,7 @@ function about() {
                 - The indigenous Taíno people revered Larimar, and its history 
                 likely spans thousands of years. In 1916, Father Miguel Domingo Fuertes 
                 Loren first glimpsed it, but official mining began in 1974 when Miguel Méndez 
-                and a Peace Corps volunteer discovered Larimar on the shores of Barahona[^1^][1].
+                and a Peace Corps volunteer discovered Larimar on the shores of Barahona.
             </p>
         </div>
         <p>

@@ -83,40 +83,56 @@ function ProductCard() {
   };
 
   return (
-    <section className="product-slider">
-      <div>Insert a video here</div>
-      <div className="product-card">
-        {/* Display the message */}
-        {message && <div className="message-box">{message}</div>}
-
-        <div className="product-details">
-          <h2>{currentProduct.name}</h2>
-          <div className="product-image-container">
-            <img
-              src={currentProduct.imageUrl}
-              alt={currentProduct.name}
-              className="product-image"
-            />
-          </div>
-          <p>{currentProduct.description}</p>
-          <p className="price">${currentProduct.price}</p>
-        </div>
-        <div className="product-actions">
-          <button className="add-to-cart" onClick={addToCart}>
-            Add to Cart
-          </button>
-          <button className="add-to-wishlist">Add to Wishlist</button>
-        </div>
-        <div className="navigation">
-          <button onClick={handlePrevClick} className="nav-arrow">
-            ←
-          </button>
-          <button onClick={handleNextClick} className="nav-arrow">
-            →
-          </button>
-        </div>
+    <div>
+      {/* Insert a video before the product slider */}
+      <h1 class="text-4xl font-bold text-center">What is Larimar</h1>
+      <div className="video-container">
+        <iframe
+          src="https://streamable.com/e/iksj7a"
+          frameBorder="0"
+          width="640"
+          height="360"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+          title="Product Intro Video"
+        ></iframe>
       </div>
-    </section>
+
+      {/* Product slider after the video */}
+      <section className="product-slider">
+        <div className="product-card">
+          {/* Display the message */}
+          {message && <div className="message-box">{message}</div>}
+
+          <div className="product-details">
+            <h2>{currentProduct.name}</h2>
+            <div className="product-image-container">
+              <img
+                src={currentProduct.imageUrl}
+                alt={currentProduct.name}
+                className="product-image"
+              />
+            </div>
+            <p>{currentProduct.description}</p>
+            <p className="price">${currentProduct.price}</p>
+          </div>
+          <div className="product-actions">
+            <button className="add-to-cart" onClick={addToCart}>
+              Add to Cart
+            </button>
+            <button className="add-to-wishlist">Add to Wishlist</button>
+          </div>
+          <div className="navigation">
+            <button onClick={handlePrevClick} className="nav-arrow">
+              ←
+            </button>
+            <button onClick={handleNextClick} className="nav-arrow">
+              →
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
 

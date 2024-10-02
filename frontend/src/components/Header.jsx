@@ -26,15 +26,16 @@ const Header = ({ searchQuery, setSearchQuery }) => { // Accept search props
   return (
     <header>
       <div className='header'>
+        <Link to="/">
         <div className="logo" style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <img src="/imgs/Logo2.png" alt="Logo" />
         </div>
+        </Link>
         <div className='navBar'>
           <nav>
             <ul>
               <li><Link to="/">Home</Link></li>
               <li><Link to="/shopall">Shop</Link></li>
-              <li><Link to="/blog">Blog</Link></li>
               <li><Link to="/about">About</Link></li>
               <li><Link to="/contact">Contact</Link></li>
             </ul>
