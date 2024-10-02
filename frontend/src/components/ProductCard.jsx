@@ -84,6 +84,7 @@ function ProductCard() {
 
   return (
     <section className="product-slider">
+      <div>Insert a video here</div>
       <div className="product-card">
         {/* Display the message */}
         {message && <div className="message-box">{message}</div>}

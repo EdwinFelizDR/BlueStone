@@ -14,7 +14,7 @@ const Header = ({ searchQuery, setSearchQuery }) => { // Accept search props
       try {
         userContext.logout();
         localStorage.removeItem('sessionToken'); // Clear session token
-        navigate('/login'); // Navigate to login page
+        navigate('/'); // Navigate to home page
       } catch (error) {
         alert('An error occurred while logging out. Please try again.');
       }
