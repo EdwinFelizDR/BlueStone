@@ -20,7 +20,6 @@ public class CheckoutController {
         this.orderItemsRepo = orderItemsRepo;
         this.paymentsRepo = paymentsRepo;
     }
-
     @PostMapping("/checkout")
     public ResponseEntity<String> processCheckout(@RequestBody Map<String, Object> checkoutData) {
         // Extract order and payment details from the request body
@@ -43,4 +42,6 @@ public class CheckoutController {
 
         return ResponseEntity.ok("Checkout processed successfully!");
     }
+
+
 }
